@@ -1,25 +1,20 @@
 from typing import Callable
+from app.decorators import Router
+
 
 class AppController:
-    def __init__(self) -> None:
-        self.routes = {
-            "/": self.index,
-            "/hello": self.hello
-        }
+    def __init__(self, router: Router) -> None:
+        self.router = router
 
-    def index(self, start_response: Callable):
-        start_response("200 OK", [("Content-Type", "text/plain; charset=utf-8")])
-        return [b"Welcome to the Index Page"]
-    
-    def hello(self, start_response: Callable):
-        start_response("200 OK", [("Content-Type", "text/plain; charset=utf-8")])
-        return [b"Hello, World!"]
-
-    def not_found(self, start_response: Callable):  
+    def not_found(self, start_response: Callable):
         start_response("404 Not Found", [("Content-Type", "text/plain; charset=utf-8")])
         return [b"404 Not Found"]
-    
+
     def application(self, environ: dict, start_response: Callable):
-        path = environ.get('PATH_INFO', '/')
-        route = self.routes.get(path, self.not_found)
-        return route(start_response)
+        method = environ.get("REQUEST_METHOD", "GET")
+        path = environ.get("PATH_INFO", "/")
+        handler, _ = self.router.find_handler(method, path)
+        if handler:
+            return handler(start_response)
+        else:
+            return self.not_found(start_response)
