@@ -20,17 +20,15 @@ class Router:
 
         return register_post_handler
 
-    def find_handler(
-        self, method: str, path: str
-    ) -> tuple[Callable | None, str | None]:
+    def find_handler(self, method: str, path: str) -> Callable | None:
         if method == "GET":
             handlers = self.get_handlers
         elif method == "POST":
             handlers = self.post_handlers
         else:
-            return None, None
+            return None
 
         for handler_path, handler in handlers:
-            if path.startswith(handler_path):
-                return handler, path[len(handler_path) :].strip("/")
-        return None, None
+            if path == handler_path:
+                return handler
+        return None
