@@ -15,7 +15,7 @@ class AppController:
     def application(self, environ: dict, start_response: Callable):
         method = environ.get("REQUEST_METHOD", "GET")
         path = environ.get("PATH_INFO", "/")
-        handler= self.router.find_handler(method, path)
+        handler = self.router.find_handler(method, path)
         if handler:
             return handler(start_response, self.template_env)
         else:
