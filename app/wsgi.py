@@ -1,7 +1,6 @@
-from app.controller import AppController
-from app.routes import router
+from app.factory import create_app
 
-app = AppController(router)
+app = create_app()
 
 
 def application(environ, start_response):
