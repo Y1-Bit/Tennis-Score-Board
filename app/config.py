@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from environs import Env
 
+
 @dataclass
 class DbConfig:
     user: str
@@ -22,6 +23,7 @@ class DbConfig:
     def get_connection_string(self) -> str:
         return f"mysql+mysqlconnector://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
 
+
 @dataclass
 class Config:
     db: DbConfig
@@ -31,6 +33,4 @@ def load_config(path: str | None = None) -> Config:
     env = Env()
     env.read_env(path)
 
-    return Config(
-        db=DbConfig.from_env(env)
-    )
+    return Config(db=DbConfig.from_env(env))
