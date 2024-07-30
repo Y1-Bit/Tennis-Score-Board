@@ -1,16 +1,19 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "mysql+mysqlconnector://user:password@localhost/dbname"
 
-engine = create_engine(DATABASE_URL)
+from app.config import load_config, Config
+
+
+config: Config = load_config(".env")
+database_url = config.db.get_connection_string()
+
+engine = create_engine(database_url)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
-
 
 @contextmanager
 def get_db():
