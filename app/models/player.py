@@ -11,6 +11,9 @@ class Player(Base):
     )
     name: Mapped[str] = mapped_column(String(255), nullable=False)
 
+    def __repr__(self) -> str:
+        return f"<Player(id={self.id}, name='{self.name}')>"
+
 
 class Matches(Base):
     __tablename__ = "matches"
