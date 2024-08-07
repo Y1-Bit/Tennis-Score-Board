@@ -13,6 +13,7 @@ services:
       - db
     volumes:
       - .:/app
+    command: uwsgi --http :8000 --wsgi-file app/wsgi.py
 
   db:
     image: mysql:8.0
