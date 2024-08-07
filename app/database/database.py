@@ -21,5 +21,9 @@ def get_db():
     session = SessionLocal()
     try:
         yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
     finally:
         session.close()

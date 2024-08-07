@@ -1,7 +1,11 @@
 from typing import Callable
-from app.decorators import Router
-from jinja2 import Environment
 from urllib.parse import parse_qs
+
+from jinja2 import Environment
+
+from app.decorators import Router
+from app.services.match_service import MatchService
+
 
 class AppController:
     def __init__(self, router: Router, template_env: Environment) -> None:
@@ -18,13 +22,12 @@ class AppController:
         handler = self.router.find_handler(method, path)
         
         if handler:
-            db_session  = environ["db_session"]
             if method == "POST":
                 content_length = int(environ.get("CONTENT_LENGTH", 0))
                 body = environ["wsgi.input"].read(content_length).decode()
                 form_data = parse_qs(body)
-                return handler(start_response, self.template_env, db_session, form_data)
+                return handler(start_response, self.template_env, environ, form_data)
             else:
-                return handler(start_response, self.template_env, db_session)
+                return handler(start_response, self.template_env)
         else:
             return self.not_found(start_response)

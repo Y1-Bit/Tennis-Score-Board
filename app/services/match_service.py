@@ -1,23 +1,22 @@
-from sqlalchemy.orm import Session
-
 from app.models.match import Match
-from app.repo.match_repo import add_match, get_all_matches
-from app.repo.player_repo import get_or_create_player
+from app.repositories.interfaces import MatchRepoInterface, PlayerRepoInterface
 
 
-def create_match(db: Session, form_data: dict) -> Match:
-    player1_name = form_data.get("player1_name", [None])[0]
-    player2_name = form_data.get("player2_name", [None])[0]
+class MatchService:
+    def __init__(
+        self, match_repo: MatchRepoInterface, player_repo: PlayerRepoInterface
+    ):
+        self.match_repo = match_repo
+        self.player_repo = player_repo
 
-    if not player1_name or not player2_name:
-        raise ValueError("Both players must be provided")
+    def create_match(self, player1_name: str, player2_name: str) -> Match:
+        player1 = self.player_repo.get_or_create(player1_name)
+        player2 = self.player_repo.get_or_create(player2_name)
+        new_match = Match(player1_id=player1.id, player2_id=player2.id)
+        return self.match_repo.add(new_match)
 
-    player1 = get_or_create_player(db, player1_name)
-    player2 = get_or_create_player(db, player2_name)
+    def list_matches(self) -> list[Match]:
+        return self.match_repo.get_all()
 
-    new_match = Match(player1_id=player1.id, player2_id=player2.id)
-    return add_match(db, new_match)
-
-
-def list_matches(db: Session) -> list[Match]:
-    return get_all_matches(db)
+    def get_match(self, match_id: int) -> Match:
+        return self.match_repo.get_by_id(match_id)
