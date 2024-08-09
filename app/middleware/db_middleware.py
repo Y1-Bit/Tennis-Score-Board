@@ -15,4 +15,5 @@ def db_session_middleware(app: Callable) -> Callable:
 
             environ["match_service"] = match_service
             return app(environ, start_response)
+
     return middleware

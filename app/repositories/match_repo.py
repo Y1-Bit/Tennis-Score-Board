@@ -23,4 +23,3 @@ class MatchRepo(MatchRepoInterface):
         if match is None:
             raise MatchNotFoundError(match_id)
         return match
-

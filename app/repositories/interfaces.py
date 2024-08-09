@@ -1,4 +1,5 @@
 from typing import Protocol
+
 from app.models.match import Match
 from app.models.player import Player
 

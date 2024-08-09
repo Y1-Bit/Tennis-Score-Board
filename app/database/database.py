@@ -1,11 +1,9 @@
 from contextlib import contextmanager
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 
-
-from app.config import load_config, Config
-
+from app.config import Config, load_config
 
 config: Config = load_config(".env")
 database_url = config.db.get_connection_string()

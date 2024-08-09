@@ -1,7 +1,6 @@
 from typing import Callable
 
 from jinja2 import Environment
-from sqlalchemy.orm import Session
 
 from app.decorators import Router
 from app.services.match_service import MatchService
@@ -18,24 +17,30 @@ def index(start_response: Callable, template_env: Environment) -> list[bytes]:
 
 
 @router.post("/matches")
-def create_new_match(start_response: Callable, template_env: Environment, environ: dict, form_data: dict) -> list[bytes]:
+def create_new_match(
+    start_response: Callable, template_env: Environment, environ: dict, form_data: dict
+) -> list[bytes]:
     match_service: MatchService = environ["match_service"]
     try:
         player1_name = form_data["player1"][0]
         player2_name = form_data["player2"][0]
 
         new_match = match_service.create_match(player1_name, player2_name)
-        
+
         template = template_env.get_template("match.html")
         response_body = template.render(match=new_match)
 
         start_response("201 Created", [("Content-Type", "text/html; charset=utf-8")])
         return [response_body.encode("utf-8")]
-    
+
     except ValueError as e:
-        start_response("400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")])
+        start_response(
+            "400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")]
+        )
         return [str(e).encode("utf-8")]
-    
+
     except Exception as e:
-        start_response("500 Internal Server Error", [("Content-Type", "text/plain; charset=utf-8")])
+        start_response(
+            "500 Internal Server Error", [("Content-Type", "text/plain; charset=utf-8")]
+        )
         return [b"Internal Server Error"]

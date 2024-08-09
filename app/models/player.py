@@ -1,5 +1,6 @@
-from sqlalchemy.orm import mapped_column, Mapped
 from sqlalchemy import Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
+
 from app.database.database import Base
 
 
@@ -13,5 +14,3 @@ class Player(Base):
 
     def __repr__(self) -> str:
         return f"<Player(id={self.id}, name='{self.name}')>"
-
-

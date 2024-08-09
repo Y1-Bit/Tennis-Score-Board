@@ -4,7 +4,6 @@ from urllib.parse import parse_qs
 from jinja2 import Environment
 
 from app.decorators import Router
-from app.services.match_service import MatchService
 
 
 class AppController:
@@ -20,7 +19,7 @@ class AppController:
         method = environ.get("REQUEST_METHOD", "GET")
         path = environ.get("PATH_INFO", "/")
         handler = self.router.find_handler(method, path)
-        
+
         if handler:
             if method == "POST":
                 content_length = int(environ.get("CONTENT_LENGTH", 0))
