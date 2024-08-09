@@ -1,7 +1,7 @@
 from typing import Protocol
 
-from app.models.match import Match
-from app.models.player import Player
+from tennis_score_board.models.match import Match
+from tennis_score_board.models.player import Player
 
 
 class MatchRepoInterface(Protocol):

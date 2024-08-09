@@ -1,7 +1,7 @@
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.database.database import Base
+from tennis_score_board.database.database import Base
 
 
 class Player(Base):

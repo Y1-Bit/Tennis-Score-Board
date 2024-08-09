@@ -2,9 +2,9 @@ from typing import Callable
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from app.controller import AppController
-from app.middleware import db_session_middleware
-from app.routes import router
+from tennis_score_board.controller import AppController
+from tennis_score_board.middleware import db_session_middleware
+from tennis_score_board.routes import router
 
 
 def create_app() -> Callable:

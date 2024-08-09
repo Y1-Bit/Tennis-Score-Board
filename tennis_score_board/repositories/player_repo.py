@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from app.models.player import Player
-from app.repositories.interfaces import PlayerRepoInterface
+from tennis_score_board.models.player import Player
+from tennis_score_board.repositories.interfaces import PlayerRepoInterface
 
 
 class PlayerRepo(PlayerRepoInterface):

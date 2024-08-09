@@ -1,5 +1,5 @@
-from app.models.match import Match
-from app.repositories.interfaces import MatchRepoInterface, PlayerRepoInterface
+from tennis_score_board.models.match import Match
+from tennis_score_board.repositories.interfaces import MatchRepoInterface, PlayerRepoInterface
 
 
 class MatchService:

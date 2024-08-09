@@ -2,8 +2,8 @@ from typing import Callable
 
 from jinja2 import Environment
 
-from app.decorators import Router
-from app.services.match_service import MatchService
+from tennis_score_board.decorators import Router
+from tennis_score_board.services.match_service import MatchService
 
 router = Router()
 

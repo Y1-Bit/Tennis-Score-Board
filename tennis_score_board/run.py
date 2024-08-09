@@ -1,6 +1,6 @@
 from wsgiref.simple_server import make_server
 
-from app.wsgi import application
+from tennis_score_board.wsgi import application
 
 if __name__ == "__main__":
     port = 8000
