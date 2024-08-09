@@ -3,7 +3,7 @@ from urllib.parse import parse_qs
 
 from jinja2 import Environment
 
-from tennis_score_board.decorators import Router
+from tennis_score_board.routes.router import Router
 
 
 class AppController:
