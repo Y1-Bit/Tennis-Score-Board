@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from tennis_score_board.exceptions import MatchNotFoundError
 from tennis_score_board.models.match import Match
-from tennis_score_board.repositories.interfaces import MatchRepoInterface
+from tennis_score_board.services.interfaces import MatchRepoInterface
 
 
 class MatchRepo(MatchRepoInterface):
