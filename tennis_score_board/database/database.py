@@ -1,11 +1,9 @@
 from contextlib import contextmanager
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 
-
-from app.config import load_config, Config
-
+from tennis_score_board.config import Config, load_config
 
 config: Config = load_config(".env")
 database_url = config.db.get_connection_string()
@@ -21,9 +19,5 @@ def get_db():
     session = SessionLocal()
     try:
         yield session
-        session.commit()
-    except:
-        session.rollback()
-        raise
     finally:
         session.close()

@@ -1,9 +1,9 @@
 from typing import Callable
 
-from app.database import get_db
-from app.repositories.match_repo import MatchRepo
-from app.repositories.player_repo import PlayerRepo
-from app.services.match_service import MatchService
+from tennis_score_board.database import get_db
+from tennis_score_board.repositories.match_repo import MatchRepo
+from tennis_score_board.repositories.player_repo import PlayerRepo
+from tennis_score_board.services.match_service import MatchService
 
 
 def db_session_middleware(app: Callable) -> Callable:
@@ -15,4 +15,5 @@ def db_session_middleware(app: Callable) -> Callable:
 
             environ["match_service"] = match_service
             return app(environ, start_response)
+
     return middleware

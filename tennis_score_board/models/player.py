@@ -1,6 +1,7 @@
-from sqlalchemy.orm import mapped_column, Mapped
 from sqlalchemy import Integer, String
-from app.database.database import Base
+from sqlalchemy.orm import Mapped, mapped_column
+
+from tennis_score_board.database.database import Base
 
 
 class Player(Base):
@@ -13,5 +14,3 @@ class Player(Base):
 
     def __repr__(self) -> str:
         return f"<Player(id={self.id}, name='{self.name}')>"
-
-
