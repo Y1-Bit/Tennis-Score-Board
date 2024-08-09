@@ -39,8 +39,3 @@ def create_new_match(
         )
         return [str(e).encode("utf-8")]
 
-    except Exception as e:
-        start_response(
-            "500 Internal Server Error", [("Content-Type", "text/plain; charset=utf-8")]
-        )
-        return [b"Internal Server Error"]
