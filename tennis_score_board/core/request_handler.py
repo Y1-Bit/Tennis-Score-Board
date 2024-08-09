@@ -3,10 +3,10 @@ from urllib.parse import parse_qs
 
 from jinja2 import Environment
 
-from tennis_score_board.routes.router import Router
+from tennis_score_board.core.router import Router
 
 
-class AppController:
+class RequestHandler:
     def __init__(self, router: Router, template_env: Environment) -> None:
         self.router = router
         self.template_env = template_env
