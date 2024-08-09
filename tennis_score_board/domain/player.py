@@ -4,5 +4,5 @@ from typing import Optional
 
 @dataclass
 class Player:
-    id: Optional[int]
+    id: int
     name: str

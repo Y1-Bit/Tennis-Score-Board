@@ -18,12 +18,5 @@ class Match(Base):
     )
     score: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
-    def __init__(self, player1_id: int, player2_id: int) -> None:
-        self.uuid = str(uuid.uuid4())
-        self.player1_id = player1_id
-        self.player2_id = player2_id
-        self.score = None
-        self.winner_id = None
-
     def __repr__(self) -> str:
         return f"<Match(id={self.id}, uuid='{self.uuid}', player1_id={self.player1_id}, player2_id={self.player2_id}, winner_id={self.winner_id}, score={self.score})>"

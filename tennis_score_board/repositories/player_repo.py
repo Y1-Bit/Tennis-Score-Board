@@ -10,11 +10,14 @@ class PlayerRepo(PlayerRepoInterface):
         self.db_session = db_session
 
     def get_or_create(self, player_name: str) -> DomainPlayer:
-        player = (
+        db_player = (
             self.db_session.query(DBPlayer).filter(DBPlayer.name == player_name).first()
         )
-        if player is None:
-            player = DBPlayer(name=player_name)
-            self.db_session.add(player)
+        if db_player is None:
+            db_player = DBPlayer(name=player_name)
+            self.db_session.add(db_player)
             self.db_session.commit()
-        return player
+        return self._to_domain(db_player)
+
+    def _to_domain(self, db_player: DBPlayer) -> DomainPlayer:
+        return DomainPlayer(id=db_player.id, name=db_player.name)
