@@ -33,9 +33,8 @@ def create_new_match(
         start_response("201 Created", [("Content-Type", "text/html; charset=utf-8")])
         return [response_body.encode("utf-8")]
 
-    except ValueError as e:
-        start_response(
-            "400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")]
-        )
-        return [str(e).encode("utf-8")]
+    except KeyError as e:
+        error_message = f"Missing required field: {str(e)}"
+        start_response("400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")])
+        return [error_message.encode("utf-8")]
 
