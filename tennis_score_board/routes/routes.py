@@ -3,13 +3,14 @@ from typing import Callable
 from jinja2 import Environment
 
 from tennis_score_board.core.router import Router
+from tennis_score_board.exceptions import MatchNotFoundError
 from tennis_score_board.services.match_service import MatchService
 
 router = Router()
 
 
 @router.get("/")
-def index(start_response: Callable, template_env: Environment) -> list[bytes]:
+def index(start_response: Callable, template_env: Environment, *args) -> list[bytes]:
     template = template_env.get_template("index.html")
     response_body = template.render()
     start_response("200 OK", [("Content-Type", "text/html; charset=utf-8")])
@@ -17,7 +18,9 @@ def index(start_response: Callable, template_env: Environment) -> list[bytes]:
 
 
 @router.get("/new-match")
-def new_match_form(start_response: Callable, template_env: Environment) -> list[bytes]:
+def new_match_form(
+    start_response: Callable, template_env: Environment, *args
+) -> list[bytes]:
     template = template_env.get_template("new_match.html")
     response_body = template.render()
     start_response("200 OK", [("Content-Type", "text/html; charset=utf-8")])
@@ -44,3 +47,23 @@ def create_new_match(
             "400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")]
         )
         return [error_message.encode("utf-8")]
+
+
+@router.get("/match-score")
+def match_score(
+    start_response: Callable,
+    template_env: Environment,
+    environ: dict,
+    query_params: dict,
+) -> list[bytes]:
+    try:
+        match_service: MatchService = environ["match_service"]
+        match_uuid = query_params.get("uuid", [""])[0]
+        match = match_service.get_match(match_uuid)
+        template = template_env.get_template("match_score.html")
+        response_body = template.render(match=match)
+        start_response("200 OK", [("Content-Type", "text/html; charset=utf-8")])
+        return [response_body.encode("utf-8")]
+    except MatchNotFoundError:
+        start_response("404 Not Found", [("Content-Type", "text/plain; charset=utf-8")])
+        return [b"404 Not Found"]

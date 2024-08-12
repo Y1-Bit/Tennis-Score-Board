@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ score }}</h1>
+    <h1>Match Score</h1>
+    <table>
+        <tr>
+            <th>Player 1</th>
+            <th>Player 2</th>
+        </tr>
+        <tr>
+            <td>{{ player1_name }}</td>
+            <td>{{ player2_name }}</td>
+        </tr>
+        <tr>
+            <td>{{ player1_score }}</td>
+            <td>{{ player2_score }}</td>
+        </tr>
+    </table>
+    <form method="post" action="/match-score?uuid={{ match_id }}">
+        <button type="submit" name="winner" value="player1">Player 1 Won</button>
+        <button type="submit" name="winner" value="player2">Player 2 Won</button>
+    </form>
 {% endblock %}

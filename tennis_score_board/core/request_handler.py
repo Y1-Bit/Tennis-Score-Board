@@ -41,7 +41,9 @@ class RequestHandler:
                         start_response, environ, form_data
                     )
                 else:
-                    return handler(start_response, self.template_env)
+                    query_string = environ.get("QUERY_STRING", "")
+                    query_params = parse_qs(query_string)
+                    return handler(start_response, self.template_env, environ, query_params)
             else:
                 return self.not_found(start_response)
         except Exception as e:
