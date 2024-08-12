@@ -1,7 +1,6 @@
 from typing import Protocol
 
-from tennis_score_board.domain.match import Match
-from tennis_score_board.domain.match import MatchList
+from tennis_score_board.domain.match import Match, MatchList
 from tennis_score_board.domain.player import Player
 
 

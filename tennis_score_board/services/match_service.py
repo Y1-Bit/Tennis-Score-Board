@@ -1,8 +1,6 @@
 from tennis_score_board.domain.match import Match, MatchList
-from tennis_score_board.services.interfaces import (
-    MatchRepoInterface,
-    PlayerRepoInterface,
-)
+from tennis_score_board.services.interfaces import (MatchRepoInterface,
+                                                    PlayerRepoInterface)
 
 
 class MatchService:

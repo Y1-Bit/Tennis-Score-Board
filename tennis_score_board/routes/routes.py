@@ -35,6 +35,7 @@ def create_new_match(
 
     except KeyError as e:
         error_message = f"Missing required field: {str(e)}"
-        start_response("400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")])
+        start_response(
+            "400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")]
+        )
         return [error_message.encode("utf-8")]
-

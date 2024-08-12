@@ -14,9 +14,11 @@ class RequestHandler:
     def not_found(self, start_response: Callable):
         start_response("404 Not Found", [("Content-Type", "text/plain; charset=utf-8")])
         return [b"404 Not Found"]
-    
+
     def server_error(self, start_response: Callable, error: Exception):
-        start_response("500 Internal Server Error", [("Content-Type", "text/plain; charset=utf-8")])
+        start_response(
+            "500 Internal Server Error", [("Content-Type", "text/plain; charset=utf-8")]
+        )
         error_message = f"Internal Server Error"
         return [error_message.encode("utf-8")]
 
@@ -31,7 +33,9 @@ class RequestHandler:
                     content_length = int(environ.get("CONTENT_LENGTH", 0))
                     body = environ["wsgi.input"].read(content_length).decode()
                     form_data = parse_qs(body)
-                    return handler(start_response, self.template_env, environ, form_data)
+                    return handler(
+                        start_response, self.template_env, environ, form_data
+                    )
                 else:
                     return handler(start_response, self.template_env)
             else:
