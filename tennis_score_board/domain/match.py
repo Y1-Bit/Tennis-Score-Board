@@ -1,7 +1,7 @@
 import uuid
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 
 
 @dataclass
@@ -29,4 +29,4 @@ class Match:
 
 @dataclass
 class MatchList:
-    matches: List[Match]
+    matches: list[Match]
