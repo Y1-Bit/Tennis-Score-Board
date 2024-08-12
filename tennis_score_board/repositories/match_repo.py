@@ -32,8 +32,6 @@ class MatchRepo(MatchRepoInterface):
             created_at=match.created_at,
         )
         self.db_session.add(db_match)
-        self.db_session.commit()
-        self.db_session.refresh(db_match)
         return self._to_domain(db_match)
 
     def get_all(self) -> DomainMatchList:
