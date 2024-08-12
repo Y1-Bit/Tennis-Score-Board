@@ -12,7 +12,6 @@ class Match:
     player2_id: int
     winner_id: Optional[int]
     score: Optional[Dict[str, int]]
-    created_at: datetime
 
     @classmethod
     def create(cls, player1_id: int, player2_id: int) -> "Match":
@@ -23,7 +22,6 @@ class Match:
             player2_id=player2_id,
             winner_id=None,
             score=None,
-            created_at=datetime.now(),
         )
 
 

@@ -19,7 +19,6 @@ class MatchRepo(MatchRepoInterface):
             player2_id=db_match.player2_id,
             winner_id=db_match.winner_id,
             score=db_match.score,
-            created_at=db_match.created_at,
         )
 
     def add(self, match: DomainMatch) -> DomainMatch:
@@ -29,7 +28,6 @@ class MatchRepo(MatchRepoInterface):
             player2_id=match.player2_id,
             winner_id=match.winner_id,
             score=match.score,
-            created_at=match.created_at,
         )
         self.db_session.add(db_match)
         return self._to_domain(db_match)
