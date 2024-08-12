@@ -9,7 +9,7 @@ from tennis_score_board.routes import router
 
 def create_app() -> Callable:
     template_env = Environment(
-        loader=FileSystemLoader("app/templates"),
+        loader=FileSystemLoader("tennis_score_board/templates"),
         autoescape=select_autoescape(["html", "xml"]),
     )
 
