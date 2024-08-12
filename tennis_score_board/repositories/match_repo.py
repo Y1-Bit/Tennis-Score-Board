@@ -1,5 +1,3 @@
-from typing import List
-
 from sqlalchemy.orm import Session
 
 from tennis_score_board.domain.match import Match as DomainMatch
