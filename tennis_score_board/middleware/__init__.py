@@ -1,1 +1,2 @@
 from .db_middleware import db_session_middleware
+from .static_middleware import static_files_middleware
