@@ -1,3 +1,4 @@
+import logging
 from typing import Callable
 from urllib.parse import parse_qs
 
@@ -7,15 +8,18 @@ from tennis_score_board.core.router import Router
 
 
 class RequestHandler:
-    def __init__(self, router: Router, template_env: Environment) -> None:
+    def __init__(
+        self, router: Router, template_env: Environment, logger: logging.Logger
+    ) -> None:
         self.router = router
         self.template_env = template_env
+        self.logger = logger
 
     def not_found(self, start_response: Callable):
         start_response("404 Not Found", [("Content-Type", "text/plain; charset=utf-8")])
         return [b"404 Not Found"]
 
-    def server_error(self, start_response: Callable, error: Exception):
+    def server_error(self, start_response: Callable):
         start_response(
             "500 Internal Server Error", [("Content-Type", "text/plain; charset=utf-8")]
         )
@@ -41,4 +45,5 @@ class RequestHandler:
             else:
                 return self.not_found(start_response)
         except Exception as e:
-            return self.server_error(start_response, e)
+            self.logger.exception(f"Error handling request: {e}")
+            return self.server_error(start_response)
