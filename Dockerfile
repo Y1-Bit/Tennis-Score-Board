@@ -1,10 +1,10 @@
 FROM python:3.11
 
-WORKDIR /app
+WORKDIR /tennis_score_board
 
 COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app ./app
+COPY tennis_score_board ./tennis_score_board
 
