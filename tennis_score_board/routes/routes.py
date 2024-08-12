@@ -16,23 +16,28 @@ def index(start_response: Callable, template_env: Environment) -> list[bytes]:
     return [response_body.encode("utf-8")]
 
 
-@router.post("/matches")
+@router.get("/new-match")
+def new_match_form(start_response: Callable, template_env: Environment) -> list[bytes]:
+    template = template_env.get_template("new_match.html")
+    response_body = template.render()
+    start_response("200 OK", [("Content-Type", "text/html; charset=utf-8")])
+    return [response_body.encode("utf-8")]
+
+
+@router.post("/new-match")
 def create_new_match(
-    start_response: Callable, template_env: Environment, environ: dict, form_data: dict
+    start_response: Callable, environ: dict, form_data: dict
 ) -> list[bytes]:
     match_service: MatchService = environ["match_service"]
     try:
         player1_name = form_data["player1"][0]
         player2_name = form_data["player2"][0]
-
         new_match = match_service.create_match(player1_name, player2_name)
 
-        template = template_env.get_template("match.html")
-        response_body = template.render(match=new_match)
-
-        start_response("201 Created", [("Content-Type", "text/html; charset=utf-8")])
-        return [response_body.encode("utf-8")]
-
+        start_response(
+            "302 Found", [("Location", f"/match-score?uuid={new_match.uuid}")]
+        )
+        return []
     except KeyError as e:
         error_message = f"Missing required field: {str(e)}"
         start_response(
