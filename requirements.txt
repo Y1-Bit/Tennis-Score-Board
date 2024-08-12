@@ -3,3 +3,4 @@ mysql-connector-python
 Jinja2
 uWSGI
 environs
+alembic
