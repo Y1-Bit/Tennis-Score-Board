@@ -1,4 +1,4 @@
-from typing import Protocol, List
+from typing import Protocol
 
 from tennis_score_board.domain.match import Match
 from tennis_score_board.domain.match import MatchList
