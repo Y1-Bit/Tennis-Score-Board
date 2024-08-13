@@ -28,6 +28,6 @@ class MatchService:
         with self.transaction_manager.transaction():
             return self.match_repo.get_all()
 
-    def get_match(self, match_id: int) -> Match:
+    def get_match(self, match_uuid: str) -> Match:
         with self.transaction_manager.transaction():
-            return self.match_repo.get_by_uuid(match_id)
+            return self.match_repo.get_by_uuid(match_uuid)

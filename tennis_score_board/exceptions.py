@@ -4,5 +4,5 @@ class DatabaseError(Exception):
 
 
 class MatchNotFoundError(DatabaseError):
-    def __init__(self, match_id: int):
-        super().__init__(f"Match with ID {match_id} not found.")
+    def __init__(self, match_uuid: str):
+        super().__init__(f"Match with ID {match_uuid} not found.")

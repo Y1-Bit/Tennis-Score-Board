@@ -37,7 +37,7 @@ class MatchRepo(MatchRepoInterface):
         domain_matches = [self._to_domain(match) for match in db_matches]
         return DomainMatchList(matches=domain_matches)
 
-    def get_by_uuid(self, uuid: int) -> DomainMatch:
+    def get_by_uuid(self, uuid: str) -> DomainMatch:
         match = self.db_session.query(DBMatch).filter(DBMatch.uuid == uuid).first()
         if match is None:
             raise MatchNotFoundError(uuid)
