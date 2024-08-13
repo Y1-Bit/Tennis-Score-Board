@@ -16,7 +16,7 @@ class Match(Base):
     winner_id: Mapped[int | None] = mapped_column(
         Integer, ForeignKey("players.id"), nullable=True
     )
-    score: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    score: Mapped[dict] = mapped_column(JSON, nullable=False)
 
     def __repr__(self) -> str:
         return f"<Match(id={self.id}, uuid='{self.uuid}', player1_id={self.player1_id}, player2_id={self.player2_id}, winner_id={self.winner_id}, score={self.score})>"
