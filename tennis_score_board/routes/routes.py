@@ -67,3 +67,28 @@ def match_score(
     except MatchNotFoundError:
         start_response("404 Not Found", [("Content-Type", "text/plain; charset=utf-8")])
         return [b"404 Not Found"]
+
+
+
+@router.post("/match-score")
+def update_match_score(start_response: Callable, template_env: Environment, environ: dict, form_data: dict) -> list[bytes]:
+    match_service: MatchService = environ["match_service"]
+    try:
+        match_uuid = form_data["uuid"][0]
+        winning_player = form_data["winning_player"][0]
+
+        updated_match = match_service.update_match_score(match_uuid, winning_player)
+
+        if updated_match.is_finished:
+            template = template_env.get_template("match_finished.html")
+            response_body = template.render(match=updated_match)
+            start_response("200 OK", [("Content-Type", "text/html; charset=utf-8")])
+            return [response_body.encode("utf-8")]
+        else:
+            start_response(
+                "302 Found", [("Location", f"/match-score?uuid={updated_match.uuid}")]
+            )
+            return []
+    except MatchNotFoundError:
+        start_response("404 Not Found", [("Content-Type", "text/plain; charset=utf-8")])
+        return [b"404 Not Found"]
