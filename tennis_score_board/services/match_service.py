@@ -23,6 +23,12 @@ class MatchService:
             player2 = self.player_repo.get_or_create(player2_name)
             new_match = Match.create(player1.id, player2.id)
             return self.match_repo.add(new_match)
+    
+    def update_match_score(self, match_uuid: str, winning_player: str) -> Match:
+        with self.transaction_manager.transaction():
+            match = self.match_repo.get_by_uuid(match_uuid)
+            match.add_point(winning_player)
+            return self.match_repo.update(match)
 
     def list_matches(self) -> MatchList:
         with self.transaction_manager.transaction():
