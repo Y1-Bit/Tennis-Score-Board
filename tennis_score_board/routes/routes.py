@@ -29,7 +29,7 @@ def new_match_form(
 
 @router.post("/new-match")
 def create_new_match(
-    start_response: Callable, environ: dict, form_data: dict
+    start_response: Callable, environ: dict, form_data: dict, *args
 ) -> list[bytes]:
     match_service: MatchService = environ["match_service"]
     try:
