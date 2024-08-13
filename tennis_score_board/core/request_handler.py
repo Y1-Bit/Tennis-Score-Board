@@ -38,7 +38,7 @@ class RequestHandler:
                     body = environ["wsgi.input"].read(content_length).decode()
                     form_data = parse_qs(body)
                     return handler(
-                        start_response, environ, form_data
+                        start_response, self.template_env, environ, form_data
                     )
                 else:
                     query_string = environ.get("QUERY_STRING", "")
