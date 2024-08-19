@@ -1,5 +1,5 @@
 from tennis_score_board.database.transaction_manager import TransactionManager
-from tennis_score_board.domain.match import Match, MatchList
+from tennis_score_board.domain.match import Match
 from tennis_score_board.services.interfaces import (
     MatchRepoInterface,
     PlayerRepoInterface,
@@ -30,10 +30,11 @@ class MatchService:
             match.add_point(winning_player)
             return self.match_repo.update(match)
 
-    def list_matches(self) -> MatchList:
-        with self.transaction_manager.transaction():
-            return self.match_repo.get_all()
-
     def get_match(self, match_uuid: str) -> Match:
         with self.transaction_manager.transaction():
             return self.match_repo.get_by_uuid(match_uuid)
+        
+    def get_matches(self, page: int, filter_by_player_name: str | None = None, per_page: int = 10) -> tuple[list[Match], int]:
+        with self.transaction_manager.transaction():
+            return self.match_repo.get_matches(page, filter_by_player_name, per_page)
+    
