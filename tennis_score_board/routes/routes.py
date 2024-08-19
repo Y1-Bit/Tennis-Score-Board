@@ -59,8 +59,8 @@ def match_score(
     environ: dict,
     query_params: dict,
 ) -> list[bytes]:
+    match_service: MatchService = environ["match_service"]
     try:
-        match_service: MatchService = environ["match_service"]
         match_uuid = query_params.get("uuid", [""])[0]
         match = match_service.get_match(match_uuid)
         template = template_env.get_template("match_score.html")
