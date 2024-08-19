@@ -29,7 +29,10 @@ def new_match_form(
 
 @router.post("/new-match")
 def create_new_match(
-    start_response: Callable, environ: dict, form_data: dict, *args
+    start_response: Callable,
+    template_env: Environment,
+    environ: dict,
+    form_data: dict,
 ) -> list[bytes]:
     match_service: MatchService = environ["match_service"]
     try:
@@ -69,9 +72,10 @@ def match_score(
         return [b"404 Not Found"]
 
 
-
 @router.post("/match-score")
-def update_match_score(start_response: Callable, template_env: Environment, environ: dict, form_data: dict) -> list[bytes]:
+def update_match_score(
+    start_response: Callable, template_env: Environment, environ: dict, form_data: dict
+) -> list[bytes]:
     match_service: MatchService = environ["match_service"]
     try:
         match_uuid = form_data["uuid"][0]
