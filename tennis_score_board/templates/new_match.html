@@ -1,15 +1,18 @@
 {% extends "base.html" %}
+
 {% block content %}
+<div class="container">
     <h1>New Match</h1>
-    <form method="post" action="/new-match">
-        <p>
-            <label for="player1">First Player Name:</label>
+    <form action="/new-match" method="POST">
+        <div class="form-group">
+            <label for="player1">Player 1 Name:</label>
             <input type="text" id="player1" name="player1" required>
-        </p>
-        <p>
-            <label for="player2">Second Player Name:</label>
+        </div>
+        <div class="form-group">
+            <label for="player2">Player 2 Name:</label>
             <input type="text" id="player2" name="player2" required>
-        </p>
-        <button type="submit">Start</button>
+        </div>
+        <button type="submit" class="btn">Start Match</button>
     </form>
+</div>
 {% endblock %}

@@ -1,23 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container">
     <h1>Match Score</h1>
-    <table>
+    <table class="score-table">
         <tr>
-            <th>Player 1</th>
-            <th>Player 2</th>
+            <th>Player</th>
+            <th>Games</th>
+            <th>Sets</th>
         </tr>
         <tr>
-            <td>{{ player1_name }}</td>
-            <td>{{ player2_name }}</td>
+            <td>Player 1 (ID: {{ match.player1_id }})</td>
+            <td>{{ match.score.player1 }}</td>
+            <td>{{ match.score.set1.player1 }}-{{ match.score.set2.player1 }}-{{ match.score.set3.player1 }}</td>
         </tr>
         <tr>
-            <td>{{ player1_score }}</td>
-            <td>{{ player2_score }}</td>
+            <td>Player 2 (ID: {{ match.player2_id }})</td>
+            <td>{{ match.score.player2 }}</td>
+            <td>{{ match.score.set1.player2 }}-{{ match.score.set2.player2 }}-{{ match.score.set3.player2 }}</td>
         </tr>
     </table>
-    <form method="post" action="/match-score?uuid={{ match_id }}">
-        <button type="submit" name="winner" value="player1">Player 1 Won</button>
-        <button type="submit" name="winner" value="player2">Player 2 Won</button>
-    </form>
+
+    {% if not match.is_finished %}
+    <div class="actions">
+        <form action="/match-score" method="POST">
+            <input type="hidden" name="uuid" value="{{ match.uuid }}">
+            <input type="hidden" name="winning_player" value="player1">
+            <button type="submit" class="btn">Player 1 won the point</button>
+        </form>
+        <form action="/match-score" method="POST">
+            <input type="hidden" name="uuid" value="{{ match.uuid }}">
+            <input type="hidden" name="winning_player" value="player2">
+            <button type="submit" class="btn">Player 2 won the point</button>
+        </form>
+    </div>
+    {% else %}
+    <h2>Match Completed!</h2>
+    <p>Winner: Player with ID {{ match.winner_id }}</p>
+    {% endif %}
+</div>
 {% endblock %}

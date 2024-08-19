@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="text-align: center; margin-top: 50px;">
-    <h1>Welcome to Tennis Score Board</h1>
-    <p>Your ultimate tennis match tracker</p>
+<div class="container">
+    <h1>Tennis Tournament</h1>
+    <nav>
+        <ul>
+            <li><a href="/new-match">New Match</a></li>
+            <li><a href="/matches">Completed Matches</a></li>
+        </ul>
+    </nav>
 </div>
 {% endblock %}
