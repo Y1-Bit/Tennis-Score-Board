@@ -92,3 +92,48 @@ def update_match_score(start_response: Callable, template_env: Environment, envi
     except MatchNotFoundError:
         start_response("404 Not Found", [("Content-Type", "text/plain; charset=utf-8")])
         return [b"404 Not Found"]
+    except KeyError as e:
+        error_message = f"Missing required field: {str(e)}"
+        start_response(
+            "400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")]
+        )
+        return [error_message.encode("utf-8")]
+
+
+
+@router.get("/matches")
+def matches(
+    start_response: Callable,
+    template_env: Environment,
+    environ: dict,
+    query_params: dict
+) -> list[bytes]:
+    match_service: MatchService = environ["match_service"]
+    try:
+        page = int(query_params.get("page", ["1"])[0])
+        filter_by_player_name = query_params.get("filter_by_player_name", [None])[0]
+        per_page = 10  
+
+        matches, total_pages = match_service.match_repo.get_matches(
+            page=page,
+            filter_by_player_name=filter_by_player_name,
+            per_page=per_page
+        )
+
+        template = template_env.get_template("matches.html")
+        response_body = template.render(
+            matches=matches,
+            page=page,
+            total_pages=total_pages,
+            query_params=query_params
+        )
+
+        start_response("200 OK", [("Content-Type", "text/html; charset=utf-8")])
+        return [response_body.encode("utf-8")]
+    except KeyError as e:
+        error_message = f"Missing required field: {str(e)}"
+        start_response(
+            "400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")]
+        )
+        return [error_message.encode("utf-8")]
+    
