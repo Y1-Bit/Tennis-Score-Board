@@ -14,7 +14,14 @@ class Match(Base):
     winner_id: Mapped[int | None] = mapped_column(
         Integer, ForeignKey("players.id"), nullable=True
     )
-    score: Mapped[dict] = mapped_column(JSON, nullable=False)
+    current_game_player1: Mapped[int] = mapped_column(Integer, default=0)
+    current_game_player2: Mapped[int] = mapped_column(Integer, default=0)
+    set1_player1: Mapped[int] = mapped_column(Integer, default=0)
+    set1_player2: Mapped[int] = mapped_column(Integer, default=0)
+    set2_player1: Mapped[int] = mapped_column(Integer, default=0)
+    set2_player2: Mapped[int] = mapped_column(Integer, default=0)
+    set3_player1: Mapped[int] = mapped_column(Integer, default=0)
+    set3_player2: Mapped[int] = mapped_column(Integer, default=0)
 
     def __repr__(self) -> str:
-        return f"<Match(id={self.id}, uuid='{self.uuid}', player1_id={self.player1_id}, player2_id={self.player2_id}, winner_id={self.winner_id}, score={self.score})>"
+        return f"<Match(id={self.id}, uuid='{self.uuid}', player1_id={self.player1_id}, player2_id={self.player2_id}, winner_id={self.winner_id})>"
