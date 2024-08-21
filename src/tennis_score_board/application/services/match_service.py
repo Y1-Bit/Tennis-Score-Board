@@ -1,9 +1,10 @@
-from tennis_score_board.database.transaction_manager import TransactionManager
 from tennis_score_board.domain.match import Match
-from tennis_score_board.services.interfaces import (
+from tennis_score_board.application.interfaces import (
     MatchRepoInterface,
     PlayerRepoInterface,
 )
+
+from tennis_score_board.adapters.infrastructure.database import TransactionManager
 
 
 class MatchService:

@@ -4,7 +4,7 @@ from urllib.parse import parse_qs
 
 from jinja2 import Environment
 
-from tennis_score_board.core.router import Router
+from mini_framework import Router
 
 
 class RequestHandler:
@@ -43,7 +43,9 @@ class RequestHandler:
                 else:
                     query_string = environ.get("QUERY_STRING", "")
                     query_params = parse_qs(query_string)
-                    return handler(start_response, self.template_env, environ, query_params)
+                    return handler(
+                        start_response, self.template_env, environ, query_params
+                    )
             else:
                 return self.not_found(start_response)
         except Exception as e:

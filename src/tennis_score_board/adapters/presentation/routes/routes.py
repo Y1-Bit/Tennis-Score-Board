@@ -2,9 +2,9 @@ from typing import Callable
 
 from jinja2 import Environment
 
-from tennis_score_board.core.router import Router
+from mini_framework import Router
+from tennis_score_board.application.services import MatchService
 from tennis_score_board.exceptions import MatchNotFoundError
-from tennis_score_board.services.match_service import MatchService
 
 router = Router()
 
@@ -104,24 +104,21 @@ def update_match_score(
         return [error_message.encode("utf-8")]
 
 
-
 @router.get("/matches")
 def matches(
     start_response: Callable,
     template_env: Environment,
     environ: dict,
-    query_params: dict
+    query_params: dict,
 ) -> list[bytes]:
     match_service: MatchService = environ["match_service"]
     try:
         page = int(query_params.get("page", ["1"])[0])
         filter_by_player_name = query_params.get("filter_by_player_name", [None])[0]
-        per_page = 10  
+        per_page = 10
 
         matches, total_pages = match_service.match_repo.get_matches(
-            page=page,
-            filter_by_player_name=filter_by_player_name,
-            per_page=per_page
+            page=page, filter_by_player_name=filter_by_player_name, per_page=per_page
         )
 
         template = template_env.get_template("matches.html")
@@ -129,7 +126,7 @@ def matches(
             matches=matches,
             page=page,
             total_pages=total_pages,
-            query_params=query_params
+            query_params=query_params,
         )
 
         start_response("200 OK", [("Content-Type", "text/html; charset=utf-8")])
@@ -140,4 +137,3 @@ def matches(
             "400 Bad Request", [("Content-Type", "text/plain; charset=utf-8")]
         )
         return [error_message.encode("utf-8")]
-    

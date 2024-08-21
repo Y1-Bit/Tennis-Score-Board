@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
+from tennis_score_board.adapters.infrastructure.models import Player as DBPlayer
+from tennis_score_board.application.interfaces import PlayerRepoInterface
 from tennis_score_board.domain.player import Player as DomainPlayer
-from tennis_score_board.models.player import Player as DBPlayer
-from tennis_score_board.services.interfaces import PlayerRepoInterface
 
 
 class PlayerRepo(PlayerRepoInterface):
