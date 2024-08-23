@@ -16,6 +16,7 @@ class PlayerRepo(PlayerRepoInterface):
         if db_player is None:
             db_player = DBPlayer(name=player_name)
             self.db_session.add(db_player)
+            self.db_session.flush()  
         return self._to_domain(db_player)
 
     def _to_domain(self, db_player: DBPlayer) -> DomainPlayer:
