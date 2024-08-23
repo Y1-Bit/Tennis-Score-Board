@@ -4,7 +4,7 @@ from urllib.parse import parse_qs
 
 from jinja2 import Environment
 
-from mini_framework import Router
+from mini_framework.core.router import Router
 
 
 class RequestHandler:
