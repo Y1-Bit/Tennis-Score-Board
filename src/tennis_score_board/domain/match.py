@@ -25,11 +25,11 @@ class MatchScore:
 
 @dataclass
 class Match:
-    id: Optional[int] = None
+    id: int | None = None
     uuid: str = field(default_factory=lambda: str(uuid.uuid4()))
     player1_id: int | None = None
     player2_id: int | None = None
-    winner_id: Optional[int] = None
+    winner_id: int | None = None
     score: MatchScore = field(default_factory=MatchScore)
 
     @classmethod
