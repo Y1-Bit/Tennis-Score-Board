@@ -11,11 +11,11 @@ from tennis_score_board.middleware.db_middleware import db_session_middleware
 
 def create_app() -> Callable:
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    static_dir = os.path.join(base_dir, "tennis_score_board", "static")
+    static_dir = os.path.join(base_dir, "tennis_score_board", "adapters/presentation/static")
 
     template_env = Environment(
         loader=FileSystemLoader(
-            os.path.join(base_dir, "tennis_score_board", "templates")
+            os.path.join(base_dir, "tennis_score_board", "adapters/presentation/templates")
         ),
         autoescape=select_autoescape(["html", "xml"]),
     )
