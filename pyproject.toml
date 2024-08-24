@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "tennis-score-board"
+version = "0.1.0"
+description = "A tennis score board application"
+authors = ["Y1-Bit <y0749701@gmail.com>"]
+readme = "README.md"
+packages = [
+    { include = "tennis_score_board", from = "src" },
+    { include = "mini_framework", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+SQLAlchemy = "^2.0.32"
+mysql-connector-python = "^9.0.0"
+Jinja2 = "^3.1.4"
+uWSGI = "^2.0.26"
+environs = "^11.0.0"
+alembic = "^1.13.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+start = "tennis_score_board.adapters.presentation.run:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
