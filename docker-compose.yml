@@ -14,6 +14,12 @@ services:
     volumes:
       - .:/app
     command: uwsgi --http :8000 --wsgi-file src/tennis_score_board/adapters/presentation/wsgi.py
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://hc-ping.com/e8c3b97b-ce36-440b-86b4-22081ab0d96e"]
+      interval: 1m
+      timeout: 30s
+      retries: 3
 
   db:
     image: mysql:8.0
@@ -26,6 +32,12 @@ services:
       - "${DB_PORT}:3306"
     volumes:
       - db_data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://hc-ping.com/3ac3416f-84c9-4bb6-8e47-89198190420e"]
+      interval: 1m
+      timeout: 30s
+      retries: 3
 
 volumes:
   db_data:
