@@ -3,7 +3,7 @@ from contextlib import contextmanager
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-from src.tennis_score_board.config import Config, load_config
+from tennis_score_board.config import Config, load_config
 
 config: Config = load_config(".env")
 database_url = config.db.get_connection_string()

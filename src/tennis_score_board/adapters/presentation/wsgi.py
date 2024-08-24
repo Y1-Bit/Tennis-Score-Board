@@ -1,4 +1,4 @@
-from src.tennis_score_board.factory import create_app
+from tennis_score_board.factory import create_app
 
 app = create_app()
 
