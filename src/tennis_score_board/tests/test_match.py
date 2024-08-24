@@ -1,7 +1,6 @@
 import pytest
 
-from src.tennis_score_board.domain.match import Match
-
+from domain.match import Match
 
 def test_deuce_scenario():
     match = Match.create(player1_id=1, player2_id=2)
