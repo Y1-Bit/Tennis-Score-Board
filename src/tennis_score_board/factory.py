@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from mini_framework import RequestHandler, static_files_middleware
 from tennis_score_board.adapters.presentation.routes import router
-from tennis_score_board.middleware.db_middleware import db_session_middleware
+from tennis_score_board.adapters.presentation.middleware.db_middleware import db_session_middleware
 
 
 def create_app() -> Callable:
