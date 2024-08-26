@@ -2,12 +2,14 @@ FROM python:3.11
 
 WORKDIR /app
 
-COPY requirements.txt ./
+RUN pip install --no-cache-dir --upgrade pip
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml ./
+COPY README.md ./   
+COPY src ./src
+
+RUN pip install --no-cache-dir .
+
+RUN pip install --no-cache-dir -e .
 
 COPY . .
-
-RUN pip install -e .
-
-ENV PYTHONPATH=/app/src:$PYTHONPATH
