@@ -33,7 +33,7 @@ shell:
 test:
 	$(DOCKER_COMPOSE) run --rm web pytest
 
-init: build
+init: 
 	$(MAKE) build
 	$(MAKE) init_migration
 	$(MAKE) migrate
