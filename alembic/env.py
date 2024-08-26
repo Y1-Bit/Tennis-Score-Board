@@ -4,8 +4,8 @@ from logging.config import fileConfig
 from sqlalchemy import create_engine
 
 from alembic import context
-from tennis_score_board.database import Base
-from tennis_score_board.models import *
+from tennis_score_board.adapters.infrastructure.database import Base
+from tennis_score_board.adapters.infrastructure.models import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
