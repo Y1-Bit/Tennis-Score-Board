@@ -22,8 +22,8 @@ class MatchService:
         with self.transaction_manager.transaction():
             player1 = self.player_repo.get_or_create(player1_name)
             player2 = self.player_repo.get_or_create(player2_name)
-            new_match = Match.create(player1.id, player2.id)
-            return self.match_repo.add(new_match)
+            new_match = Match.create(player1, player2)
+            return self.match_repo.add(new_match, player1, player2)
     
     def update_match_score(self, match_uuid: str, winning_player: str) -> Match:
         with self.transaction_manager.transaction():

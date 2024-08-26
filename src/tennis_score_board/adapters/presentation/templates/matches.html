@@ -11,7 +11,7 @@
     <ul class="matches-list">
     {% for match in matches %}
         <li>
-            <span>Player 1 (ID: {{ match.player1_id }}) vs Player 2 (ID: {{ match.player2_id }})</span>
+            <span>{{ match.player1.name }} (ID: {{ match.player1.id }}) vs {{ match.player2.name }} (ID: {{ match.player2.id }})</span>
             {% if match.score %}
                 <span>Score: 
                     {{ match.score.set1.player1 }}-{{ match.score.set1.player2 }}, 

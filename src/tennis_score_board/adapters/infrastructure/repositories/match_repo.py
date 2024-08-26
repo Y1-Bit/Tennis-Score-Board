@@ -5,6 +5,7 @@ from tennis_score_board.adapters.infrastructure.models import Player as DBPlayer
 from tennis_score_board.application.interfaces import MatchRepoInterface
 from tennis_score_board.domain.match import GameScore
 from tennis_score_board.domain.match import Match as DomainMatch
+from tennis_score_board.domain.match import Player as DomainPlayer
 from tennis_score_board.domain.match import MatchList as DomainMatchList
 from tennis_score_board.domain.match import MatchScore, SetScore
 from tennis_score_board.exceptions import MatchNotFoundError
@@ -13,13 +14,16 @@ from tennis_score_board.exceptions import MatchNotFoundError
 class MatchRepo(MatchRepoInterface):
     def __init__(self, db_session: Session):
         self.db_session = db_session
+    
+    def _to_player(self, db_player: DBPlayer) -> DomainPlayer:
+        return DomainPlayer(id=db_player.id, name=db_player.name)
 
     def _to_domain(self, db_match: DBMatch) -> DomainMatch:
         return DomainMatch(
             id=db_match.id,
             uuid=db_match.uuid,
-            player1_id=db_match.player1_id,
-            player2_id=db_match.player2_id,
+            player1=db_match.player1,
+            player2=db_match.player2,
             winner_id=db_match.winner_id,
             score=MatchScore(
                 current_game=GameScore(
@@ -31,12 +35,12 @@ class MatchRepo(MatchRepoInterface):
             ),
         )
 
-    def _to_db(self, match: DomainMatch) -> DBMatch:
+    def _to_db(self, match: DomainMatch, player1: DomainPlayer, player2: DomainPlayer) -> DBMatch:
         return DBMatch(
             id=match.id,
             uuid=match.uuid,
-            player1_id=match.player1_id,
-            player2_id=match.player2_id,
+            player1_id=player1.id,
+            player2_id=player2.id,
             winner_id=match.winner_id,
             current_game_player1=match.score.current_game.player1,
             current_game_player2=match.score.current_game.player2,
@@ -48,8 +52,8 @@ class MatchRepo(MatchRepoInterface):
             set3_player2=match.score.set3.player2,
         )
 
-    def add(self, match: DomainMatch) -> DomainMatch:
-        db_match = self._to_db(match)
+    def add(self, match: DomainMatch, player1: DomainPlayer, player2: DomainPlayer) -> DomainMatch:
+        db_match = self._to_db(match, player1, player2)
         self.db_session.add(db_match)
         return self._to_domain(db_match)
 
