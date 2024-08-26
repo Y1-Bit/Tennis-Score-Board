@@ -1,4 +1,4 @@
-.PHONY: build up down logs test clean
+.PHONY: build up down logs test clean migrate makemigrations shell init
 
 DOCKER_COMPOSE = docker-compose
 
@@ -14,33 +14,27 @@ down:
 logs:
 	$(DOCKER_COMPOSE) logs -f
 
-test:
-	$(DOCKER_COMPOSE) run --rm web poetry run pytest
-
 clean:
 	docker system prune -f
 
 migrate:
-	$(DOCKER_COMPOSE) run --rm web poetry run alembic upgrade head
+	$(DOCKER_COMPOSE) run --rm web alembic upgrade head
 
 makemigrations:
 	@read -p "Enter migration message: " message; \
-	$(DOCKER_COMPOSE) run --rm web poetry run alembic revision --autogenerate -m "$$message"
+	$(DOCKER_COMPOSE) run --rm web alembic revision --autogenerate -m "$$message"
+
+init_migration:
+	$(DOCKER_COMPOSE) run --rm web alembic revision --autogenerate -m "Initial migration"
 
 shell:
 	$(DOCKER_COMPOSE) exec web /bin/bash
 
-install:
-	poetry install
+test:
+	$(DOCKER_COMPOSE) run --rm web pytest
 
-update:
-	poetry update
-
-lint:
-	poetry run flake8 .
-
-format:
-	poetry run black .
-
-typecheck:
-	poetry run mypy .
+init: build
+	$(MAKE) build
+	$(MAKE) init_migration
+	$(MAKE) migrate
+	@echo "Initialization complete. You can now run 'make up' to start the application."
