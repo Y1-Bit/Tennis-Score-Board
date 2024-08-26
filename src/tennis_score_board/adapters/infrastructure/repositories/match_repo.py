@@ -51,7 +51,6 @@ class MatchRepo(MatchRepoInterface):
     def add(self, match: DomainMatch) -> DomainMatch:
         db_match = self._to_db(match)
         self.db_session.add(db_match)
-        self.db_session.commit()
         return self._to_domain(db_match)
 
     def update(self, match: DomainMatch) -> DomainMatch:
@@ -71,7 +70,6 @@ class MatchRepo(MatchRepoInterface):
         db_match.set3_player1 = match.score.set3.player1
         db_match.set3_player2 = match.score.set3.player2
 
-        self.db_session.commit()
         return self._to_domain(db_match)
 
     def get_all(self) -> DomainMatchList:
