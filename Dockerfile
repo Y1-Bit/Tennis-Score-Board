@@ -1,10 +1,12 @@
 FROM python:3.11
 
 WORKDIR /app
+RUN mkdir ./src
 
-COPY requirements.txt ./
+RUN pip install --no-cache-dir --upgrade pip
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml ./
 
-COPY app ./app
+RUN pip install --no-cache-dir -e .
 
+COPY . .

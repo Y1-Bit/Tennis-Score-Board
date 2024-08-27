@@ -1,0 +1,1 @@
+from .static_middleware import static_files_middleware

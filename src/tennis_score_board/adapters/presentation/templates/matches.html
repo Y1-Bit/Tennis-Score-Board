@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Completed Matches</h1>
+    <form action="/matches" method="GET" class="search-form">
+        <input type="text" name="filter_by_player_name" placeholder="Player name" value="{{ query_params.get('filter_by_player_name', [''])[0] }}">
+        <button type="submit" class="btn">Search</button>
+    </form>
+
+    <ul class="matches-list">
+    {% for match in matches %}
+        <li>
+            <span>{{ match.player1.name }} (ID: {{ match.player1.id }}) vs {{ match.player2.name }} (ID: {{ match.player2.id }})</span>
+            {% if match.score %}
+                <span>Score: 
+                    {{ match.score.set1.player1 }}-{{ match.score.set1.player2 }}, 
+                    {{ match.score.set2.player1 }}-{{ match.score.set2.player2 }}, 
+                    {{ match.score.set3.player1 }}-{{ match.score.set3.player2 }}
+                </span>
+            {% else %}
+                <span>Score: Not available</span>
+            {% endif %}
+            <span>Winner: {% if match.winner_id %}Player with ID {{ match.winner_id }}{% else %}Not determined{% endif %}</span>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="/matches?page={{ page - 1 }}&filter_by_player_name={{ query_params.get('filter_by_player_name', [''])[0] }}" class="btn">Previous</a>
+        {% endif %}
+        <span>Page {{ page }} of {{ total_pages }}</span>
+        {% if page < total_pages %}
+        <a href="/matches?page={{ page + 1 }}&filter_by_player_name={{ query_params.get('filter_by_player_name', [''])[0] }}" class="btn">Next</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

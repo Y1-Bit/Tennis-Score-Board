@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Match Finished</h1>
+    <h2>Final Score</h2>
+    <table class="score-table">
+        <tr>
+            <th>Player</th>
+            <th>Sets</th>
+        </tr>
+        <tr>
+            <td>{{ match.player1.name }} (ID: {{ match.player1.id }})</td>
+            <td>{{ match.score.set1.player1 }}-{{ match.score.set2.player1 }}-{{ match.score.set3.player1 }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.player2.name }} (ID: {{ match.player1.id }})</td>
+            <td>{{ match.score.set1.player2 }}-{{ match.score.set2.player2 }}-{{ match.score.set3.player2 }}</td>
+        </tr>
+    </table>
+    <h3>Winner: Player with ID {{ match.winner_id }}</h3>
+    <a href="/" class="btn">Back to Home</a>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Match Score</h1>
+    <table class="score-table">
+        <tr>
+            <th>Player</th>
+            <th>Games</th>
+            <th>Sets</th>
+        </tr>
+        <tr>
+            <td>{{ match.player1.name }} (ID: {{ match.player1.id }})</td>
+            <td>{{ match.score.current_game.player1 }}</td>
+            <td>{{ match.score.set1.player1 }}-{{ match.score.set2.player1 }}-{{ match.score.set3.player1 }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.player2.name }} (ID: {{ match.player2.id }})</td>
+            <td>{{ match.score.current_game.player2 }}</td>
+            <td>{{ match.score.set1.player2 }}-{{ match.score.set2.player2 }}-{{ match.score.set3.player2 }}</td>
+        </tr>
+    </table>
+
+    {% if not match.is_finished %}
+    <div class="actions">
+        <form action="/match-score" method="POST">
+            <input type="hidden" name="uuid" value="{{ match.uuid }}">
+            <input type="hidden" name="winning_player" value="player1">
+            <button type="submit" class="btn">Player 1 won the point</button>
+        </form>
+        <form action="/match-score" method="POST">
+            <input type="hidden" name="uuid" value="{{ match.uuid }}">
+            <input type="hidden" name="winning_player" value="player2">
+            <button type="submit" class="btn">Player 2 won the point</button>
+        </form>
+    </div>
+    {% else %}
+    <h2>Match Completed!</h2>
+    <p>Winner: Player with ID {{ match.winner_id }}</p>
+    {% endif %}
+</div>
+{% endblock %}

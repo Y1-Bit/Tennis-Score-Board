@@ -13,7 +13,13 @@ services:
       - db
     volumes:
       - .:/app
-    command: uwsgi --http :8000 --wsgi-file app/wsgi.py
+    command: uwsgi --http :8000 --wsgi-file src/tennis_score_board/adapters/presentation/wsgi.py
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://your_healthcheck_url"]
+      interval: 1m
+      timeout: 30s
+      retries: 3
 
   db:
     image: mysql:8.0
@@ -26,6 +32,12 @@ services:
       - "${DB_PORT}:3306"
     volumes:
       - db_data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://your_healthcheck_url"]
+      interval: 1m
+      timeout: 30s
+      retries: 3
 
 volumes:
   db_data:
