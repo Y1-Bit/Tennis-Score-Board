@@ -2,8 +2,10 @@ from contextlib import contextmanager
 
 from sqlalchemy.orm import Session
 
+from tennis_score_board.application.interfaces import TransactionManagerInterface
 
-class TransactionManager:
+
+class TransactionManager(TransactionManagerInterface):
     def __init__(self, db_session: Session):
         self.db_session = db_session
 

@@ -2,9 +2,8 @@ from tennis_score_board.domain.match import Match
 from tennis_score_board.application.interfaces import (
     MatchRepoInterface,
     PlayerRepoInterface,
+    TransactionManagerInterface
 )
-
-from tennis_score_board.adapters.infrastructure.database import TransactionManager
 
 
 class MatchService:
@@ -12,7 +11,7 @@ class MatchService:
         self,
         match_repo: MatchRepoInterface,
         player_repo: PlayerRepoInterface,
-        transaction_manager: TransactionManager,
+        transaction_manager: TransactionManagerInterface,
     ):
         self.match_repo = match_repo
         self.player_repo = player_repo
