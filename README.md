@@ -57,8 +57,6 @@ make up
 
 ### Creating Migrations
 
-To create a new database migration, use:
-
 ```bash
 make makemigrations
 ```
