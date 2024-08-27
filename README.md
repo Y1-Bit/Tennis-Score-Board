@@ -38,10 +38,10 @@ cd tennis-score-board
 
 2. Create a `.env` file in the project root directory and fill it with the necessary environment variables (see `.env.dist` for reference).
 
-3. Build and run the containers:
+3. Build, make migrations and run the containers:
 
 ```bash
-make build
+make init
 make up
 ```
 
