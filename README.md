@@ -63,6 +63,12 @@ To create a new database migration, use:
 make makemigrations
 ```
 
+### Running Migrations
+
+```bash
+make migrate
+```
+
 ### Running Tests
 
 ```bash
