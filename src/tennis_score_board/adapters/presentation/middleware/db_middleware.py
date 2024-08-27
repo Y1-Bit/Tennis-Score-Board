@@ -1,6 +1,6 @@
 from typing import Callable
 
-from tennis_score_board.adapters.infrastructure.database import get_db
+from tennis_score_board.adapters.infrastructure.database.database import Database
 from tennis_score_board.adapters.infrastructure.database.transaction_manager import (
     TransactionManager,
 )
@@ -11,9 +11,9 @@ from tennis_score_board.adapters.infrastructure.repositories.player_repo import 
 from tennis_score_board.application.services.match_service import MatchService
 
 
-def db_session_middleware(app: Callable) -> Callable:
+def db_session_middleware(app: Callable, database: Database) -> Callable:
     def middleware(environ, start_response):
-        with get_db() as db_session:
+        with database.get_db() as db_session:
             transaction_manager = TransactionManager(db_session)
             match_repo = MatchRepo(db_session)
             player_repo = PlayerRepo(db_session)
